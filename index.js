@@ -1,15 +1,13 @@
 require("dotenv").config();
 const express = require("express");
-const sequelize = require("./src/config/sqlConnection");
-const { auth, authroutes } = require("./src/routes/auth.route");
-const jwtVerify = require("./src/middelware/jwtVerify");
-
 const app = express();
+const sequelize = require("./src/config/sqlConnection");
+const { authroutes } = require("./src/routes/auth.route");
 
 app.use(express.json());
 const PORT = process.env.PORT;
 
-console.log("port", PORT);
+console.log("Port++", PORT);
 
 sequelize
   .authenticate()
@@ -18,8 +16,11 @@ sequelize
   })
   .catch((error) => console.log(error));
 
+app.get("/", (req, res) => {
+  console.log("test")
+  res.send("Working");
+});
 app.use(authroutes);
-app.use(jwtVerify);
 //server lisning on
 app.listen(PORT, () => {
   console.log(`server running  on port-${PORT}`);
